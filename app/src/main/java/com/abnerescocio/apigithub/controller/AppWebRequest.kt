@@ -1,5 +1,6 @@
 package com.abnerescocio.apigithub.controller
 
+import com.abnerescocio.apigithub.model.QueryUsers
 import com.abnerescocio.apigithub.model.Repo
 import com.abnerescocio.apigithub.model.User
 import retrofit2.Call
@@ -20,6 +21,10 @@ class AppWebRequest {
 
     fun listUsers(): Call<List<User>> {
         return service.listUsers()
+    }
+
+    fun listUsers(query: String): Call<QueryUsers> {
+        return service.listUsers(query)
     }
 
     fun getUser(user: String) : Call<User> {

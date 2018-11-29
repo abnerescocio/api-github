@@ -10,6 +10,7 @@ import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.item_user.view.*
 
 class UsersAdapter(
+    private val interaction: OnListInteraction,
     private val users: List<User>?
 ): RecyclerView.Adapter<UsersAdapter.UsersVH>() {
 
@@ -33,7 +34,15 @@ class UsersAdapter(
         }
 
         Glide.with(holder.itemView).load(user?.avatarUrl).into(holder.itemView.avatar)
+
+        holder.itemView.setOnClickListener {
+            interaction.onItemClick(user)
+        }
     }
 
     inner class UsersVH(itemView: View): RecyclerView.ViewHolder(itemView)
+
+    interface OnListInteraction {
+        fun onItemClick(user: User?)
+    }
 }

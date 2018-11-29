@@ -1,5 +1,6 @@
 package com.abnerescocio.apigithub.view.activities
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
@@ -16,7 +17,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), UsersAdapter.OnListInteraction {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,7 +39,7 @@ class MainActivity : AppCompatActivity() {
             override fun onResponse(call: Call<List<User>>, response: Response<List<User>>) {
                 progress.visibility = View.GONE
                 swipe.isRefreshing = false
-                users.adapter = UsersAdapter(response.body())
+                users.adapter = UsersAdapter(this@MainActivity, response.body())
             }
         })
     }
@@ -49,9 +50,16 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.action_search -> true
+        when (item.itemId) {
+            R.id.action_search -> {
+                startActivity(Intent(this, SearchUserActivity::class.java))
+            }
             else -> super.onOptionsItemSelected(item)
         }
+        return super.onOptionsItemSelected(item)
+    }
+
+    override fun onItemClick(user: User?) {
+
     }
 }
