@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">GitHub API v3</string>
+    <string name="action_settings">Settings</string>
+    <string name="user_avatar">Avatar do usuário</string>
+    <string name="try_again">Tentar novamente</string>
+    <string name="administrator">Administrador</string>
+</resources>
