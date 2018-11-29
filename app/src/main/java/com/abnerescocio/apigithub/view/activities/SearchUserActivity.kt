@@ -1,5 +1,6 @@
 package com.abnerescocio.apigithub.view.activities
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.SearchView
@@ -55,6 +56,9 @@ class SearchUserActivity : AppCompatActivity(), SearchView.OnQueryTextListener, 
     }
 
     override fun onItemClick(user: User?) {
-
+        val intent = Intent(this, UserActivity::class.java)
+        intent.putExtra(UserActivity.USER, user)
+        startActivity(intent)
+        finish()
     }
 }

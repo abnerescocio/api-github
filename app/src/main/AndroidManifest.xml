@@ -28,6 +28,11 @@
                 android:label="@string/title_activity_search_user"
                 android:theme="@style/AppTheme.NoActionBar">
         </activity>
+        <activity
+                android:name=".view.activities.UserActivity"
+                android:label="@string/title_activity_user"
+                android:theme="@style/AppTheme.NoActionBar">
+        </activity>
     </application>
 
 </manifest>

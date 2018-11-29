@@ -60,6 +60,8 @@ class MainActivity : AppCompatActivity(), UsersAdapter.OnListInteraction {
     }
 
     override fun onItemClick(user: User?) {
-
+        val intent = Intent(this, UserActivity::class.java)
+        intent.putExtra(UserActivity.USER, user)
+        startActivity(intent)
     }
 }

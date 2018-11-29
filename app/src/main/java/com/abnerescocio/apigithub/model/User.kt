@@ -1,8 +1,9 @@
 package com.abnerescocio.apigithub.model
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
-class User {
+class User: Serializable {
 
     @SerializedName("login")
     var name: String? = null
