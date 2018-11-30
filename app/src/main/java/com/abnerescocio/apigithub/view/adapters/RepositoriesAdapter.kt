@@ -11,6 +11,7 @@ import kotlinx.android.synthetic.main.item_repository.view.*
 class RepositoriesAdapter(
     private val repos: List<Repo>?
 ): RecyclerView.Adapter<RepositoriesAdapter.RepoVH>() {
+
     override fun onCreateViewHolder(parent: ViewGroup, p1: Int): RepoVH {
         return RepoVH(LayoutInflater.from(parent.context)
             .inflate(R.layout.item_repository, parent, false))
@@ -27,7 +28,6 @@ class RepositoriesAdapter(
         holder.itemView.stars.text = repo?.stargazersCount.toString()
         holder.itemView.forks.text = repo?.forksCount.toString()
     }
-
 
     inner class RepoVH(itemView: View) : RecyclerView.ViewHolder(itemView)
 }

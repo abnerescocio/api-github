@@ -27,15 +27,15 @@ class UserActivity : AppCompatActivity() {
 
         val args = intent?.extras
         if (args != null) {
-            var user = args.getSerializable(USER) as User?
+            var user = args.getSerializable(USER_NAME) as User?
             title = user?.name
             Glide.with(container).load(user?.avatarUrl).into(avatar)
 
             val requestUser = AppWebRequest().getUser(user?.name ?: "")
             requestUser.enqueue(object : Callback<User> {
                 override fun onFailure(call: Call<User>, t: Throwable) {
-                    Snackbar.make(repos, t.localizedMessage, Snackbar.LENGTH_INDEFINITE).setAction(R.string.try_again) {
-                        call.enqueue(this)
+                    Snackbar.make(repos, R.string.get_user_error, Snackbar.LENGTH_INDEFINITE).setAction(R.string.try_again) {
+                        call.clone().enqueue(this)
                     }.show()
                 }
 
@@ -50,8 +50,9 @@ class UserActivity : AppCompatActivity() {
             requestUserRepos.enqueue(object : Callback<List<Repo>> {
                 override fun onFailure(call: Call<List<Repo>>, t: Throwable) {
                     progress.visibility = View.GONE
-                    Snackbar.make(repos, t.localizedMessage, Snackbar.LENGTH_INDEFINITE).setAction(R.string.try_again) {
-                        call.enqueue(this)
+                    Snackbar.make(repos, R.string.list_repos_error, Snackbar.LENGTH_INDEFINITE).setAction(R.string.try_again) {
+                        progress.visibility = View.VISIBLE
+                        call.clone().enqueue(this)
                     }.show()
                 }
                 override fun onResponse(call: Call<List<Repo>>, response: Response<List<Repo>>) {
@@ -68,6 +69,6 @@ class UserActivity : AppCompatActivity() {
     }
 
     companion object {
-        const val USER = "userName"
+        const val USER_NAME = "userName"
     }
 }

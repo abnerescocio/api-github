@@ -98,4 +98,9 @@
         "when a user tries to pick up one of cards.\n\n"
     </string>
     <string name="repos">Repositórios</string>
+    <string name="list_users_error">Erro ao listar usuários</string>
+    <string name="search_users_error">Erro ao pesquisar usuários</string>
+    <string name="get_user_error">Erro ao selecionar usuário</string>
+    <string name="list_repos_error">Erro ao listar repositórios do usuário</string>
+    <string name="api_v3">API v3</string>
 </resources>

@@ -2,6 +2,7 @@ package com.abnerescocio.apigithub.view.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.SearchView
 import android.view.Menu
@@ -42,6 +43,10 @@ class SearchUserActivity : AppCompatActivity(), SearchView.OnQueryTextListener, 
         request.enqueue(object : Callback<QueryUsers> {
             override fun onFailure(call: Call<QueryUsers>, t: Throwable) {
                 progress.visibility = View.GONE
+                Snackbar.make(users, R.string.search_users_error, Snackbar.LENGTH_INDEFINITE).setAction(R.string.try_again) {
+                    progress.visibility = View.VISIBLE
+                    call.clone().enqueue(this)
+                }.show()
             }
             override fun onResponse(call: Call<QueryUsers>, response: Response<QueryUsers>) {
                 progress.visibility = View.GONE
@@ -57,7 +62,7 @@ class SearchUserActivity : AppCompatActivity(), SearchView.OnQueryTextListener, 
 
     override fun onItemClick(user: User?) {
         val intent = Intent(this, UserActivity::class.java)
-        intent.putExtra(UserActivity.USER, user)
+        intent.putExtra(UserActivity.USER_NAME, user)
         startActivity(intent)
         finish()
     }

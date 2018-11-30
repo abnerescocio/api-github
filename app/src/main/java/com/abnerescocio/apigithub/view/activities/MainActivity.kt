@@ -36,8 +36,9 @@ class MainActivity : AppCompatActivity(), UsersAdapter.OnListInteraction {
             override fun onFailure(call: Call<List<User>>, t: Throwable) {
                 progress.visibility = View.GONE
                 swipe.isRefreshing = false
-                Snackbar.make(users, t.localizedMessage, Snackbar.LENGTH_INDEFINITE).setAction(R.string.try_again) {
-                    call.enqueue(this)
+                Snackbar.make(users, R.string.list_users_error, Snackbar.LENGTH_INDEFINITE).setAction(R.string.try_again) {
+                    progress.visibility = View.VISIBLE
+                    call.clone().enqueue(this)
                 }.show()
             }
             override fun onResponse(call: Call<List<User>>, response: Response<List<User>>) {
@@ -65,7 +66,7 @@ class MainActivity : AppCompatActivity(), UsersAdapter.OnListInteraction {
 
     override fun onItemClick(user: User?) {
         val intent = Intent(this, UserActivity::class.java)
-        intent.putExtra(UserActivity.USER, user)
+        intent.putExtra(UserActivity.USER_NAME, user)
         startActivity(intent)
     }
 }
