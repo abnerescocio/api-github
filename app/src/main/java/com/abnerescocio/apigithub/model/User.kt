@@ -13,4 +13,13 @@ class User: Serializable {
 
     @SerializedName("site_admin")
     var isAdmin: Boolean = false
+
+    @SerializedName("company")
+    var company: String? = null
+
+    @SerializedName("location")
+    var location: String? = null
+
+    @SerializedName("email")
+    var email: String? = null
 }

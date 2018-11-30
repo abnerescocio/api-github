@@ -22,7 +22,10 @@ class RepositoriesAdapter(
 
     override fun onBindViewHolder(holder: RepoVH, position: Int) {
         val repo = repos?.get(position)
-        holder.itemView.repo.text = repo?.name
+        holder.itemView.name.text = repo?.name
+        holder.itemView.watchers.text = repo?.watchersCount.toString()
+        holder.itemView.stars.text = repo?.stargazersCount.toString()
+        holder.itemView.forks.text = repo?.forksCount.toString()
     }
 
 

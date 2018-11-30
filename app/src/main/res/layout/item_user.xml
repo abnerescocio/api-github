@@ -31,17 +31,15 @@
 
     <TextView android:id="@+id/name"
               android:text="@android:string/unknownName"
-              android:textSize="16sp"
-              android:textStyle="bold"
-              android:textAllCaps="true"
+              android:textSize="24sp"
               android:layout_width="0dp"
               android:layout_height="wrap_content"
-              android:textAppearance="?attr/textAppearanceLargePopupMenu"
               app:layout_constraintEnd_toEndOf="parent"
               app:layout_constraintTop_toTopOf="parent"
               app:layout_constraintBottom_toTopOf="@+id/description"
               app:layout_constraintStart_toEndOf="@+id/card_view"
-              android:layout_marginStart="16dp" app:layout_constraintVertical_chainStyle="packed"/>
+              android:layout_marginStart="16dp"
+              app:layout_constraintVertical_chainStyle="packed"/>
 
     <TextView android:id="@+id/description"
           android:text="@android:string/untitled"

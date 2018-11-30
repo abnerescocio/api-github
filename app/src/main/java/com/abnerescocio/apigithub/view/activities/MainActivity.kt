@@ -2,6 +2,7 @@ package com.abnerescocio.apigithub.view.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
@@ -35,6 +36,9 @@ class MainActivity : AppCompatActivity(), UsersAdapter.OnListInteraction {
             override fun onFailure(call: Call<List<User>>, t: Throwable) {
                 progress.visibility = View.GONE
                 swipe.isRefreshing = false
+                Snackbar.make(users, t.localizedMessage, Snackbar.LENGTH_INDEFINITE).setAction(R.string.try_again) {
+                    call.enqueue(this)
+                }.show()
             }
             override fun onResponse(call: Call<List<User>>, response: Response<List<User>>) {
                 progress.visibility = View.GONE

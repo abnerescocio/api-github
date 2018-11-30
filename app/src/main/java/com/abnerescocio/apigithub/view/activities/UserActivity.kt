@@ -1,7 +1,9 @@
 package com.abnerescocio.apigithub.view.activities
 
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
+import android.view.MenuItem
 import android.view.View
 import com.abnerescocio.apigithub.R
 import com.abnerescocio.apigithub.controller.AppWebRequest
@@ -21,6 +23,7 @@ class UserActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user)
         setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         val args = intent?.extras
         if (args != null) {
@@ -31,25 +34,37 @@ class UserActivity : AppCompatActivity() {
             val requestUser = AppWebRequest().getUser(user?.name ?: "")
             requestUser.enqueue(object : Callback<User> {
                 override fun onFailure(call: Call<User>, t: Throwable) {
-                    progress.visibility = View.GONE
+                    Snackbar.make(repos, t.localizedMessage, Snackbar.LENGTH_INDEFINITE).setAction(R.string.try_again) {
+                        call.enqueue(this)
+                    }.show()
                 }
 
                 override fun onResponse(call: Call<User>, response: Response<User>) {
-                    progress.visibility = View.GONE
                     user = response.body()
+                    user?.company?.let { organization.text = it }
+                    user?.location?.let { location.text = it }
                 }
             })
 
             val requestUserRepos = AppWebRequest().listRepo(user?.name ?: "")
             requestUserRepos.enqueue(object : Callback<List<Repo>> {
                 override fun onFailure(call: Call<List<Repo>>, t: Throwable) {
-
+                    progress.visibility = View.GONE
+                    Snackbar.make(repos, t.localizedMessage, Snackbar.LENGTH_INDEFINITE).setAction(R.string.try_again) {
+                        call.enqueue(this)
+                    }.show()
                 }
                 override fun onResponse(call: Call<List<Repo>>, response: Response<List<Repo>>) {
+                    progress.visibility = View.GONE
                     repos.adapter = RepositoriesAdapter(response.body())
                 }
             })
         }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        if (item?.itemId == android.R.id.home) finish()
+        return true
     }
 
     companion object {
