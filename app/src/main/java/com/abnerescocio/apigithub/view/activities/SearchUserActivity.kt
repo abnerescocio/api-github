@@ -3,12 +3,10 @@ package com.abnerescocio.apigithub.view.activities
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.Snackbar
-import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.SearchView
 import android.view.Menu
 import android.view.View
 import com.abnerescocio.apigithub.R
-import com.abnerescocio.apigithub.controller.AppWebRequest
 import com.abnerescocio.apigithub.model.QueryUsers
 import com.abnerescocio.apigithub.model.User
 import com.abnerescocio.apigithub.view.adapters.UsersAdapter
@@ -19,7 +17,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class SearchUserActivity : AppCompatActivity(), SearchView.OnQueryTextListener, UsersAdapter.OnListInteraction {
+class SearchUserActivity : BaseActivity(), SearchView.OnQueryTextListener, UsersAdapter.OnListInteraction {
 
     private var searchView: SearchView? = null
 
@@ -39,7 +37,7 @@ class SearchUserActivity : AppCompatActivity(), SearchView.OnQueryTextListener, 
     override fun onQueryTextSubmit(query: String?): Boolean {
         progress.visibility = View.VISIBLE
         searchView?.clearFocus()
-        val request = AppWebRequest().listUsers(query ?: "")
+        val request = service.listUsers(query ?: "")
         request.enqueue(object : Callback<QueryUsers> {
             override fun onFailure(call: Call<QueryUsers>, t: Throwable) {
                 progress.visibility = View.GONE

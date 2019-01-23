@@ -3,12 +3,10 @@ package com.abnerescocio.apigithub.view.activities
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.Snackbar
-import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import com.abnerescocio.apigithub.R
-import com.abnerescocio.apigithub.controller.AppWebRequest
 import com.abnerescocio.apigithub.model.User
 import com.abnerescocio.apigithub.view.adapters.UsersAdapter
 
@@ -18,7 +16,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class MainActivity : AppCompatActivity(), UsersAdapter.OnListInteraction {
+class MainActivity : BaseActivity(), UsersAdapter.OnListInteraction {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,7 +29,7 @@ class MainActivity : AppCompatActivity(), UsersAdapter.OnListInteraction {
     }
 
     private fun requestUsers() {
-        val request = AppWebRequest().listUsers()
+        val request = service.listUsers()
         request.enqueue(object : Callback<List<User>> {
             override fun onFailure(call: Call<List<User>>, t: Throwable) {
                 progress.visibility = View.GONE

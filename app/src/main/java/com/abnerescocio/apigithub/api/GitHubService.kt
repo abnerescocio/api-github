@@ -1,4 +1,4 @@
-package com.abnerescocio.apigithub.controller
+package com.abnerescocio.apigithub.api
 
 import com.abnerescocio.apigithub.model.QueryUsers
 import com.abnerescocio.apigithub.model.Repo

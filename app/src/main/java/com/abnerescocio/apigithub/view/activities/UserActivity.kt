@@ -2,11 +2,9 @@ package com.abnerescocio.apigithub.view.activities
 
 import android.os.Bundle
 import android.support.design.widget.Snackbar
-import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import android.view.View
 import com.abnerescocio.apigithub.R
-import com.abnerescocio.apigithub.controller.AppWebRequest
 import com.abnerescocio.apigithub.model.Repo
 import com.abnerescocio.apigithub.model.User
 import com.abnerescocio.apigithub.view.adapters.RepositoriesAdapter
@@ -17,7 +15,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class UserActivity : AppCompatActivity() {
+class UserActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,7 +29,7 @@ class UserActivity : AppCompatActivity() {
             title = user?.name
             Glide.with(container).load(user?.avatarUrl).into(avatar)
 
-            val requestUser = AppWebRequest().getUser(user?.name ?: "")
+            val requestUser = service.getUser(user?.name ?: "")
             requestUser.enqueue(object : Callback<User> {
                 override fun onFailure(call: Call<User>, t: Throwable) {
                     Snackbar.make(repos, R.string.get_user_error, Snackbar.LENGTH_INDEFINITE).setAction(R.string.try_again) {
@@ -46,7 +44,7 @@ class UserActivity : AppCompatActivity() {
                 }
             })
 
-            val requestUserRepos = AppWebRequest().listRepo(user?.name ?: "")
+            val requestUserRepos = service.listRepo(user?.name ?: "")
             requestUserRepos.enqueue(object : Callback<List<Repo>> {
                 override fun onFailure(call: Call<List<Repo>>, t: Throwable) {
                     progress.visibility = View.GONE
